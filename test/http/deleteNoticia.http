@@ -1,0 +1,1 @@
+DELETE http://localhost:5000/noticias/1 HTTP/1.1

@@ -2,6 +2,7 @@ POST http://localhost:5000/noticias HTTP/1.1
 Content-Type: application/json
 
 {
+    "id" : "90",
     "title" : "titulo1",
     "categoria" : "cat1",
     "autor" : "autor1",
