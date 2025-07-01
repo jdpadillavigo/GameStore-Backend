@@ -6,7 +6,6 @@ export interface noticia {
     redaccion: string
     image : string
     dias : number
-    select : boolean
 }
 
 export let listaNoticias : noticia[] = [
@@ -17,8 +16,7 @@ export let listaNoticias : noticia[] = [
     autor: 'Nintendo',
     redaccion: 'Se espera que los propietarios de la nueva consola de la compañía japonesa puedan ver videos en YouTube',
     image: 'https://i0.wp.com/levelup.buscafs.com/2025/06/Switch-2-3.jpg?resize=320,144&quality=75&strip=all',
-    dias: 10,
-    select: false
+    dias: 10
   },
   {
     id: 2,
@@ -27,8 +25,7 @@ export let listaNoticias : noticia[] = [
     autor: 'Equipo GameStore',
     redaccion: 'La compañía ofreció disculpas a los usuarios de la consola de Sony que serán afectados',
     image: 'https://i0.wp.com/levelup.buscafs.com/2025/06/Cancelan-Gears-para-PS5-en-Japont.jpg?resize=320,144&quality=75&strip=all',
-    dias: 26,
-    select: false
+    dias: 26
   },
   {
     id: 3,
@@ -37,8 +34,7 @@ export let listaNoticias : noticia[] = [
     autor: 'Sony',
     redaccion: 'El contenido adicional debutará de forma simultánea en todas las plataformas',
     image: 'https://i0.wp.com/levelup.buscafs.com/2025/06/Indiana-528e009bdea8ecc04fc3-1536x864-1-401b99a11368a1b0820c.jpg?resize=320,144&quality=75&strip=all',
-    dias: 18,
-    select: false
+    dias: 18
   },
   {
     id: 4,
@@ -47,7 +43,6 @@ export let listaNoticias : noticia[] = [
     autor: 'PlanetGame',
     redaccion: 'Microsoft reafirmó todas las mejoras que tendrá esta versión, tanto en single player como multijugador',
     image: 'https://i0.wp.com/levelup.buscafs.com/2025/06/Final-Fantasy-VII-Remake-Intergade-Final-Fantasy-XVI-port-Xbox-Square-Enix-Xbox-Games-Showcase.jpg?resize=320,144&quality=75&strip=all',
-    dias: 30,
-    select: false
+    dias: 30
   }
 ]

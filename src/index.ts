@@ -77,13 +77,6 @@ app.post("/noticias",(req : Request , resp : Response) =>{
         })
         return
     }
-    if(nota.select == undefined)
-    {
-        resp.status(400).json({
-            msg : "Debe llenar el nuevo link de la imagen"
-        })
-        return
-    }
 
     listaNot.push({
         id : nota.id,
@@ -92,8 +85,7 @@ app.post("/noticias",(req : Request , resp : Response) =>{
         autor : nota.autor,
         redaccion: nota.redaccion,
         image : nota.image,
-        dias : nota.dias,
-        select : nota.select
+        dias : nota.dias
     })
     resp.json({
         msg: ""
@@ -112,7 +104,13 @@ app.put("/noticias/:id",(req : Request , resp : Response) => {
         })
         return
     }
-
+    if(nota.id == undefined)
+    {
+        resp.status(400).json({
+            msg : "Debe enviar el id"
+        })
+        return
+    }
     if(nota.title == undefined)
     {
         resp.status(400).json({
@@ -152,7 +150,8 @@ app.put("/noticias/:id",(req : Request , resp : Response) => {
     for (let nt of listaNot)
     {
         if(nt.id.toString() == notaId){
-            nt.title = nota.descripcion
+            //console.log(notaId)
+            nt.title = nota.title
             nt.categoria = nota.categoria
             nt.autor = nota.autor
             nt.redaccion = nota.redaccion
@@ -162,16 +161,10 @@ app.put("/noticias/:id",(req : Request , resp : Response) => {
             })
             return
         }
-        resp.status(400).json({
-            msg : "No existe noticia con ese id"
-        })
-        return
     }
-
     resp.status(400).json({
-        msg : "No existe todo con ese id"
+        msg : "No existe noticia con ese id"
     })
-    return
 })
 
 app.delete("/noticias/:id",(req : Request , resp : Response) => {

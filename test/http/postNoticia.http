@@ -8,6 +8,5 @@ Content-Type: application/json
     "autor" : "autor1",
     "redaccion": "redac1",
     "image" : "url1",
-    "dias" : 4,
-    "select" : false
+    "dias" : "4"
 }
