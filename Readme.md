@@ -1,6 +1,6 @@
-# Documento de Endpoints GameStore-backend
+# Endpoints GameStore-Backend
 
-## Seccion de noticias
+## Sección de noticias
 
 ### Endpoint: Listar noticias
 
@@ -46,7 +46,7 @@
 
 ```json
 {
-    "msg" : ""
+    "msg" : "Noticia agregada correctamente"
 }
 ```
 
@@ -72,7 +72,7 @@
 
 ```json
 {
-    "msg" : ""
+    "msg" : "Noticia editada correctamente"
 }
 ```
 
@@ -88,6 +88,6 @@ Path parameter: noticias/2
 
 ```json
 {
-    "msg" : ""
+    "msg" : "Noticia eliminada correctamente"
 }
 ```
