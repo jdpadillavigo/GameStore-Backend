@@ -1,11 +1,11 @@
 export interface noticia {
-    id : number
-    title : string
-    categoria : string
-    autor : string
-    redaccion: string
-    image : string
-    dias : number
+  id : number
+  title : string
+  categoria : string
+  autor : string
+  redaccion: string
+  image : string
+  dias : number
 }
 
 export let listaNoticias : noticia[] = [

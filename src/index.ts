@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express"
 import dotenv from "dotenv"
 import { listaNoticias, noticia } from "./noticias"
-import { Games, Game } from "./games"
+import { Games } from "./games"
 import bodyParser from "body-parser"
 import cors from "cors"
 
@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
     extended : true
 }))
 
-app.use(cors()) //configurando cors
+app.use(cors())
 
 const PORT = process.env.PORT
 
@@ -128,10 +128,6 @@ app.delete("/noticias/:id",(req : Request , resp : Response) => {
     })
 })
 
-app.listen(PORT, () => {
-    console.log(`Se inició el servidor en puerto ${PORT}`)
-})
-
 
 // Endpoints Juegos
 app.get("/juegos",(req : Request , resp : Response) => {
@@ -177,7 +173,7 @@ app.post("/juegos",(req : Request , resp : Response) =>{
         category: newGame.category,
         base_price: newGame.base_price,
         discount: newGame.discount,
-        platform: newGame.platform,
+        platform: newGame.platform
     };
 
     resp.json({
@@ -186,14 +182,14 @@ app.post("/juegos",(req : Request , resp : Response) =>{
 })
 
 app.put("/juegos/:id", (req: Request, resp: Response) => {
-    const gameSelected = req.body;
-    const gameKey = req.params.id;
+    const gameSelected = req.body
+    const gameKey = req.params.id
 
     if (!gameKey) {
     resp.status(400).json({
-        msg: "Debe enviar un ID como parte del path",
-    });
-    return;
+        msg: "Debe enviar un ID como parte del path"
+    })
+    return
     }
 
     if (
@@ -208,16 +204,16 @@ app.put("/juegos/:id", (req: Request, resp: Response) => {
     gameSelected.platform === undefined
     ) {
     resp.status(400).json({
-        msg: "Debe llenar todos los campos",
-    });
-    return;
+        msg: "Debe llenar todos los campos"
+    })
+    return
     }
 
     if (!Games[gameKey]) {
     resp.status(404).json({
-        msg: "No existe un juego con ese ID",
-    });
-    return;
+        msg: "No existe un juego con ese ID"
+    })
+    return
     }
 
     Games[gameKey] = {
@@ -230,10 +226,31 @@ app.put("/juegos/:id", (req: Request, resp: Response) => {
     category: gameSelected.category,
     base_price: gameSelected.base_price,
     discount: gameSelected.discount,
-    platform: gameSelected.platform,
+    platform: gameSelected.platform
     };
 
     resp.json({
-    msg: "Juego editado correctamente",
-    });
-});
+    msg: "Juego editado correctamente"
+    })
+})
+
+app.delete("/juegos/:id", (req: Request, resp: Response) => {
+    const gameKey = req.params.id
+
+    if (!Games[gameKey]) {
+        resp.status(404).json({
+            msg: "No existe un juego con ese ID"
+        })
+        return
+    }
+
+    delete Games[gameKey]
+
+    resp.json({
+        msg: "Juego eliminado correctamente"
+    })
+})
+
+app.listen(PORT, () => {
+    console.log(`Se inició el servidor en puerto ${PORT}`)
+})
