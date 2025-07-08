@@ -171,7 +171,7 @@ Path parameter: noticias/2
 
 ### Endpoint: Modificar un juego
 
-- Path(Path parameter: juegos/id): "/juegos/j1"
+- Path(Path parameter: juego/id): "/juego/j1"
 - Metodo: PUT
 - Input:
 
@@ -205,11 +205,11 @@ Path parameter: noticias/2
 
 ### Endpoint: Eliminar un juego
 
-- Path(Path parameter: juegos/id): "/juegos/j1"
+- Path(Path parameter: juego/id): "/juego/j1"
 - Metodo: DELETE
 - Input:
 
-Path parameter: juegos/j1
+Path parameter: juego/j1
 
 - Output
 

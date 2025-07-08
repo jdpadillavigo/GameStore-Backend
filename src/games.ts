@@ -269,5 +269,33 @@ export const Games: { [key: string]: Game } = {
         base_price: 180,
         discount: 15,
         platform: "PlayStation"
+    },
+    "Resident Evil 4 Remake": {
+        title: "Resident Evil 4 Remake",
+        description: "Un juego de survival horror donde controlas a Leon S. Kennedy en una misión para rescatar a la hija del presidente mientras lucha contra criaturas infectadas.",
+        trailer: "https://www.youtube.com/embed/j5Ic2z3_xp0",
+        images: [
+            "/images/games/resident_evil_4_remake_1.jpg",
+            "/images/games/resident_evil_4_remake_2.jpg",
+            "/images/games/resident_evil_4_remake_3.jpg",
+            "/images/games/resident_evil_4_remake_4.jpg"
+        ],
+        reviews: [
+            {
+                author: "Francisco Álvarez",
+                message: "La mejor remasterización de la saga, un clásico modernizado.",
+                stars: 5
+            },
+            {
+                author: "Patricia Gómez",
+                message: "Es un gran remake, pero algunas partes pierden el toque clásico del original.",
+                stars: 4
+            }
+        ],
+        release_date: "24/03/2023",
+        category: "Survival Horror, Acción, Mejor valorado",
+        base_price: 153,
+        discount: 0,
+        platform: "PlayStation, Xbox, Windows"
     }
 };

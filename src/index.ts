@@ -181,27 +181,21 @@ app.post("/juegos",(req : Request , resp : Response) =>{
     })
 })
 
-app.put("/juegos/:id", (req: Request, resp: Response) => {
-    const gameSelected = req.body
-    const gameKey = req.params.id
-
-    if (!gameKey) {
-    resp.status(400).json({
-        msg: "Debe enviar un ID como parte del path"
-    })
-    return
-    }
+app.put("/juego/:key", (req: Request, resp: Response) => {
+    const key = decodeURIComponent(req.params.key)
+    console.log('Clave recibida para actualización:', key);
+    const updatedGame = req.body
 
     if (
-    gameSelected.title === undefined ||
-    gameSelected.description === undefined ||
-    gameSelected.trailer === undefined ||
-    !Array.isArray(gameSelected.images) ||
-    gameSelected.release_date === undefined ||
-    gameSelected.category === undefined ||
-    typeof gameSelected.base_price !== "number" ||
-    typeof gameSelected.discount !== "number" ||
-    gameSelected.platform === undefined
+    updatedGame.title === undefined ||
+    updatedGame.description === undefined ||
+    updatedGame.trailer === undefined ||
+    !Array.isArray(updatedGame.images) ||
+    updatedGame.release_date === undefined ||
+    updatedGame.category === undefined ||
+    typeof updatedGame.base_price !== "number" ||
+    typeof updatedGame.discount !== "number" ||
+    updatedGame.platform === undefined
     ) {
     resp.status(400).json({
         msg: "Debe llenar todos los campos"
@@ -209,43 +203,32 @@ app.put("/juegos/:id", (req: Request, resp: Response) => {
     return
     }
 
-    if (!Games[gameKey]) {
+    if (!Games[key]) {
     resp.status(404).json({
         msg: "No existe un juego con ese ID"
     })
     return
     }
 
-    Games[gameKey] = {
-    ...Games[gameKey],
-    title: gameSelected.title,
-    description: gameSelected.description,
-    trailer: gameSelected.trailer,
-    images: gameSelected.images,
-    release_date: gameSelected.release_date,
-    category: gameSelected.category,
-    base_price: gameSelected.base_price,
-    discount: gameSelected.discount,
-    platform: gameSelected.platform
-    };
-
+    Games[key] = { ...Games[key], ...updatedGame }
     resp.json({
-    msg: "Juego editado correctamente"
+        msg: "Juego actualizado correctamente"
     })
+    return
 })
 
-app.delete("/juegos/:id", (req: Request, resp: Response) => {
-    const gameKey = req.params.id
+app.delete("/juego/:key", (req: Request, resp: Response) => {
+    const key = decodeURIComponent(req.params.key)
+    console.log('Clave recibida para eliminación:', key);
 
-    if (!Games[gameKey]) {
+    if (!Games[key]) {
         resp.status(404).json({
             msg: "No existe un juego con ese ID"
         })
         return
     }
 
-    delete Games[gameKey]
-
+    delete Games[key]
     resp.json({
         msg: "Juego eliminado correctamente"
     })
