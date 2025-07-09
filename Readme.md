@@ -5,7 +5,7 @@
 ### Endpoint: Listar noticias
 
 - Path: "/noticias"
-- Metodo: GET
+- Método: GET
 - Input:
 
 - Output
@@ -27,7 +27,7 @@
 ### Endpoint: Registrar una noticia
 
 - Path: "/noticias"
-- Metodo: POST
+- Método: POST
 - Input:
 
 ```json
@@ -52,8 +52,8 @@
 
 ### Endpoint: Modificar una noticia
 
-- Path(Path parameter: noticias/id): "/noticias/2"
-- Metodo: PUT
+- Path (Path parameter: noticias/id): "/noticias/2"
+- Método: PUT
 - Input:
 
 ```json
@@ -78,8 +78,8 @@
 
 ### Endpoint: Eliminar una noticia
 
-- Path(Path parameter: noticias/id): "/noticias/2"
-- Metodo: DELETE
+- Path (Path parameter: noticias/id): "/noticias/2"
+- Método: DELETE
 - Input:
 
 Path parameter: noticias/2
@@ -97,7 +97,7 @@ Path parameter: noticias/2
 ### Endpoint: Listar juegos
 
 - Path: "/juegos"
-- Metodo: GET
+- Método: GET
 - Input:
 
 - Output
@@ -138,7 +138,7 @@ Path parameter: noticias/2
 ### Endpoint: Registrar un juego
 
 - Path: "/juegos"
-- Metodo: POST
+- Método: POST
 - Input:
 
 ```json
@@ -171,8 +171,8 @@ Path parameter: noticias/2
 
 ### Endpoint: Modificar un juego
 
-- Path(Path parameter: juego/id): "/juego/j1"
-- Metodo: PUT
+- Path (Path parameter: juego/id): "/juego/j1"
+- Método: PUT
 - Input:
 
 ```json
@@ -205,8 +205,8 @@ Path parameter: noticias/2
 
 ### Endpoint: Eliminar un juego
 
-- Path(Path parameter: juego/id): "/juego/j1"
-- Metodo: DELETE
+- Path (Path parameter: juego/id): "/juego/j1"
+- Método: DELETE
 - Input:
 
 Path parameter: juego/j1

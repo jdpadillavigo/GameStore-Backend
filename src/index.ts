@@ -20,6 +20,10 @@ app.get("/", (req : Request , resp : Response) => {
     resp.send("Endpoint raiz")
 })
 
+app.listen(PORT, () => {
+    console.log(`Se inició el servidor en puerto ${PORT}`)
+})
+
 // Endpoints Noticias
 app.get("/noticias",(req : Request , resp : Response) => {
     const lista = listaNoticias
@@ -183,31 +187,38 @@ app.post("/juegos",(req : Request , resp : Response) =>{
 
 app.put("/juego/:key", (req: Request, resp: Response) => {
     const key = decodeURIComponent(req.params.key)
-    console.log('Clave recibida para actualización:', key);
     const updatedGame = req.body
 
     if (
-    updatedGame.title === undefined ||
-    updatedGame.description === undefined ||
-    updatedGame.trailer === undefined ||
-    !Array.isArray(updatedGame.images) ||
-    updatedGame.release_date === undefined ||
-    updatedGame.category === undefined ||
-    typeof updatedGame.base_price !== "number" ||
-    typeof updatedGame.discount !== "number" ||
-    updatedGame.platform === undefined
+        updatedGame.title === undefined ||
+        updatedGame.description === undefined ||
+        updatedGame.trailer === undefined ||
+        !Array.isArray(updatedGame.images) ||
+        updatedGame.release_date === undefined ||
+        updatedGame.category === undefined ||
+        typeof updatedGame.base_price !== "number" ||
+        typeof updatedGame.discount !== "number" ||
+        updatedGame.platform === undefined
     ) {
-    resp.status(400).json({
-        msg: "Debe llenar todos los campos"
-    })
-    return
+        resp.status(400).json({
+            msg: "Debe llenar todos los campos"
+        })
+        return
     }
 
     if (!Games[key]) {
-    resp.status(404).json({
-        msg: "No existe un juego con ese ID"
-    })
-    return
+        resp.status(404).json({
+            msg: "No existe un juego con ese ID"
+        })
+        return
+    }
+
+    const { id, ...gameData } = updatedGame;
+    if (id && id !== key) {
+        delete Games[key];
+        Games[id] = { ...gameData };
+    } else {
+        Games[key] = { ...Games[key], ...updatedGame };
     }
 
     Games[key] = { ...Games[key], ...updatedGame }
@@ -219,7 +230,6 @@ app.put("/juego/:key", (req: Request, resp: Response) => {
 
 app.delete("/juego/:key", (req: Request, resp: Response) => {
     const key = decodeURIComponent(req.params.key)
-    console.log('Clave recibida para eliminación:', key);
 
     if (!Games[key]) {
         resp.status(404).json({
@@ -232,8 +242,4 @@ app.delete("/juego/:key", (req: Request, resp: Response) => {
     resp.json({
         msg: "Juego eliminado correctamente"
     })
-})
-
-app.listen(PORT, () => {
-    console.log(`Se inició el servidor en puerto ${PORT}`)
 })
