@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Noticia {
+  id Int @id @default(autoincrement())
+  title String
+  text String
+  active Boolean
+}
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  email String @unique
+  pasword String
+  name String
+  token String
+  status Boolean
+  ventas Venta[]
+  calificaciones Calificacion[]
+}
+
+model Venta {
+  id Int @id @default(autoincrement())
+  date String
+  code String
+  amountPaid Int
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  juegoId Int
+  juego Juego @relation(fields: [juegoId], references: [id])
+}
+
+model Calificacion {
+  id Int @id @default(autoincrement())
+  ranking String
+  comment String
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  juegoId Int
+  juego Juego @relation(fields: [juegoId], references: [id])
+}
+
+model Juego {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+  isOffer Boolean
+  status Boolean
+  categoriaId Int
+  categoria Categoria @relation(fields: [categoriaId], references: [id])
+  calificaciones Calificacion[]
+  ventas Venta[]
+  plataformas PlataformaJuego[]
+}
+
+model PlataformaJuego {
+  juegoId Int
+  plataformaId Int
+  juego Juego @relation(fields: [juegoId], references: [id])
+  plataforma Plataforma @relation(fields: [plataformaId], references: [id])
+  @@id([juegoId, plataformaId])
+}
+
+model Plataforma {
+  id Int @id @default(autoincrement())
+  name String
+  juegos PlataformaJuego[]
+}
+
+model Categoria {
+  id Int @id @default(autoincrement())
+  name String
+  juegos Juego[]
+}
