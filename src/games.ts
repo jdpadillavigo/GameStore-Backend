@@ -5,6 +5,7 @@ interface Review {
 }
 
 export interface Game {
+    id: string;
     title: string;
     description: string;
     trailer: string;
@@ -17,8 +18,9 @@ export interface Game {
     platform: string;
 }
 
-export const Games: { [key: string]: Game } = {
-    "GTA_V": {
+export const Games: Game[] = [
+    {
+        id: "GTA_V",
         title: "Grand Theft Auto V",
         description: "Un juego de acción y aventura de mundo abierto, donde puedes explorar una ciudad ficticia, cometer crímenes y vivir aventuras con diferentes personajes.",
         trailer: "https://www.youtube.com/embed/nzV5_Uhu08A",
@@ -46,7 +48,8 @@ export const Games: { [key: string]: Game } = {
         discount: 20,
         platform: "PlayStation, Xbox, Windows"
     },
-    "NFS_Heat": {
+    {
+        id: "NFS_Heat",
         title: "Need for Speed Heat",
         description: "Un juego de carreras lleno de acción y adrenalina, con la posibilidad de personalizar vehículos y competir en circuitos nocturnos.",
         trailer: "https://www.youtube.com/embed/9ewiJJe_nYI",
@@ -74,7 +77,8 @@ export const Games: { [key: string]: Game } = {
         discount: 15,
         platform: "PlayStation, Xbox, Windows"
     },
-    "Elden_Ring": {
+    {
+        id: "Elden_Ring",
         title: "Elden Ring",
         description: "Un juego de rol de acción en un mundo abierto donde los jugadores exploran un vasto mundo, luchan contra jefes desafiantes y mejoran sus habilidades.",
         trailer: "https://www.youtube.com/embed/AKXiKBnzpBQ",
@@ -102,7 +106,8 @@ export const Games: { [key: string]: Game } = {
         discount: 10,
         platform: "PlayStation, Xbox, Windows"
     },
-    "Cyberpunk_2077": {
+    {
+        id: "Cyberpunk_2077",
         title: "Cyberpunk 2077",
         description: "Un juego de rol y acción ambientado en un futuro distópico, donde tomas el rol de un mercenario en la ciudad de Night City.",
         trailer: "https://www.youtube.com/embed/nLhWWoAaZ0Q",
@@ -130,7 +135,8 @@ export const Games: { [key: string]: Game } = {
         discount: 25,
         platform: "PlayStation, Xbox, Windows"
     },
-    "Red_Dead_Redemption 2": {
+    {
+        id: "Red_Dead_Redemption 2",
         title: "Red Dead Redemption 2",
         description: "Un juego de acción y aventura ambientado en el Viejo Oeste, donde los jugadores toman el rol de un forajido que explora un mundo abierto y toma decisiones clave.",
         trailer: "https://www.youtube.com/embed/eaW0tYpxyp0",
@@ -158,7 +164,8 @@ export const Games: { [key: string]: Game } = {
         discount: 30,
         platform: "PlayStation, Xbox, Windows"
     },
-    "Horizon_Forbidden_West": {
+    {
+        id: "Horizon_Forbidden_West",
         title: "Horizon Forbidden West",
         description: "Un juego de aventura y acción en un mundo post-apocalíptico, donde controlas a Aloy, una cazadora que combate máquinas en un entorno vasto y diverso.",
         trailer: "https://www.youtube.com/embed/Lq594XmpPBg",
@@ -186,7 +193,8 @@ export const Games: { [key: string]: Game } = {
         discount: 15,
         platform: "PlayStation"
     },
-    "Ghost_of_Tsushima": {
+    {
+        id: "Ghost_of_Tsushima",
         title: "Ghost of Tsushima",
         description: "Un juego de acción y aventura ambientado en el Japón feudal, donde tomas el rol de un samurái que lucha por defender su hogar.",
         trailer: "https://www.youtube.com/embed/iqysmS4lxwQ",
@@ -214,7 +222,8 @@ export const Games: { [key: string]: Game } = {
         discount: 20,
         platform: "PlayStation"
     },
-    "Assassins_Creed_Valhalla": {
+    {
+        id: "Assassins_Creed_Valhalla",
         title: "Assassin’s Creed Valhalla",
         description: "Un juego de acción y aventura ambientado en la época vikinga, donde controlas a un guerrero vikingo mientras exploras un mundo abierto y realizas misiones.",
         trailer: "https://www.youtube.com/embed/ssrNcwxALS4",
@@ -242,7 +251,8 @@ export const Games: { [key: string]: Game } = {
         discount: 10,
         platform: "PlayStation, Xbox, Windows"
     },
-    "Spider-Man": {
+    {
+        id: "Spider-Man",
         title: "Marvel’s Spider-Man Remastered",
         description: "Un juego de acción y aventura basado en el famoso superhéroe Spider-Man, donde puedes balancearte por la ciudad de Nueva York y luchar contra diversos villanos.",
         trailer: "https://www.youtube.com/embed/1E051WtpyWg",
@@ -270,7 +280,8 @@ export const Games: { [key: string]: Game } = {
         discount: 15,
         platform: "PlayStation"
     },
-    "Resident_Evil_4_Remake": {
+    {
+        id: "Resident_Evil_4_Remake",
         title: "Resident Evil 4 Remake",
         description: "Un juego de survival horror donde controlas a Leon S. Kennedy en una misión para rescatar a la hija del presidente mientras lucha contra criaturas infectadas.",
         trailer: "https://www.youtube.com/embed/j5Ic2z3_xp0",
@@ -298,4 +309,4 @@ export const Games: { [key: string]: Game } = {
         discount: 0,
         platform: "PlayStation, Xbox, Windows"
     }
-};
+]

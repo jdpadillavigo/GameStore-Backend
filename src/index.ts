@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express"
 import dotenv from "dotenv"
 import { listaNoticias, noticia } from "./noticias"
-import { Games } from "./games"
+import { Games, Game } from "./games"
 import bodyParser from "body-parser"
 import cors from "cors"
 
@@ -47,6 +47,13 @@ app.post("/noticias",(req : Request , resp : Response) =>{
             msg : "Debe llenar todos los campos"
         })
         return
+    }
+
+    if (listaNot[nota.id]) {
+        resp.status(400).json({
+          msg: "La noticia con ese ID ya existe"
+        });
+        return;
     }
 
     listaNot.push({
@@ -142,7 +149,7 @@ app.post("/juegos",(req : Request , resp : Response) =>{
     const newGame = req.body
 
     if (
-        newGame.key === undefined ||
+        newGame.id === undefined ||
         newGame.title === undefined ||
         newGame.description === undefined ||
         newGame.trailer === undefined ||
@@ -160,14 +167,15 @@ app.post("/juegos",(req : Request , resp : Response) =>{
         return
     }
 
-    if (Games[newGame.key]) {
+    if (Games[newGame.id]) {
         resp.status(400).json({
-          msg: "El juego con esa clave ya existe"
+          msg: "El juego con ese ID ya existe"
         });
         return;
     }
 
-    Games[newGame.key] = {
+    Games.push({
+        id: newGame.id,
         title: newGame.title,
         description: newGame.description,
         trailer: newGame.trailer,
@@ -178,18 +186,19 @@ app.post("/juegos",(req : Request , resp : Response) =>{
         base_price: newGame.base_price,
         discount: newGame.discount,
         platform: newGame.platform
-    };
+    })
 
     resp.json({
         msg: "Juego agregado correctamente"
     })
 })
 
-app.put("/juego/:key", (req: Request, resp: Response) => {
-    const key = decodeURIComponent(req.params.key)
+app.put("/juego/:id", (req: Request, resp: Response) => {
+    const gameId = decodeURIComponent(req.params.id)
     const updatedGame = req.body
 
     if (
+        updatedGame.id === undefined ||
         updatedGame.title === undefined ||
         updatedGame.description === undefined ||
         updatedGame.trailer === undefined ||
@@ -206,40 +215,61 @@ app.put("/juego/:key", (req: Request, resp: Response) => {
         return
     }
 
-    if (!Games[key]) {
+    let gameFound = false;
+    for (let g of Games) {
+        if (g.id.toString() === gameId || g.title === updatedGame.title) {
+            gameFound = true;
+            break;
+        }
+    }
+
+    if (!gameFound) {
         resp.status(404).json({
-            msg: "No existe un juego con ese ID"
+            msg: "No existe un juego con ese ID o título"
         })
         return
     }
 
-    const { id, ...gameData } = updatedGame;
-    if (id && id !== key) {
-        delete Games[key];
-        Games[id] = { ...gameData };
-    } else {
-        Games[key] = { ...Games[key], ...updatedGame };
-    }
+    for (let g of Games)
+    {
+        if(g.id.toString() == gameId || g.title === updatedGame.title){
+            g.id = updatedGame.id
+            g.title = updatedGame.title
+            g.description = updatedGame.description
+            g.trailer = updatedGame.trailer
+            g.images = updatedGame.images
+            g.release_date = updatedGame.release_date
+            g.category = updatedGame.category
+            g.base_price = updatedGame.base_price
+            g.discount = updatedGame.discount
+            g.platform = updatedGame.platform
 
-    Games[key] = { ...Games[key], ...updatedGame }
-    resp.json({
-        msg: "Juego actualizado correctamente"
-    })
-    return
+            resp.json({
+                msg : "Juego actualizado correctamente"
+            })
+            return
+        }
+    }
 })
 
-app.delete("/juego/:key", (req: Request, resp: Response) => {
-    const key = decodeURIComponent(req.params.key)
+app.delete("/juego/:id", (req: Request, resp: Response) => {
+    const gameId = decodeURIComponent(req.params.id)
+    const gamesData = Games
 
-    if (!Games[key]) {
-        resp.status(404).json({
-            msg: "No existe un juego con ese ID"
+    const indiceAEliminar = gamesData.findIndex((g : Game) => {
+        return g.id.toString() == gameId
+    })
+
+    if(indiceAEliminar == -1){
+        resp.status(400).json({
+            msg : "No existe juego con ese ID"
         })
         return
     }
 
-    delete Games[key]
+    gamesData.splice(indiceAEliminar, 1)
+
     resp.json({
-        msg: "Juego eliminado correctamente"
+        msg : "Juego eliminado correctamente"
     })
 })
