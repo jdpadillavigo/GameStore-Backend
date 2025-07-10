@@ -7,11 +7,11 @@ Content-Type: application/json
 {
     "id" : "90",
     "title" : "titulo1",
-    "categoria" : "cat1",
-    "autor" : "autor1",
-    "redaccion": "redac1",
+    "category" : "cat1",
+    "author" : "autor1",
+    "redaction": "redac1",
     "image" : "url1",
-    "dias" : "4"
+    "days" : "4"
 }
 
 ###
@@ -21,11 +21,11 @@ Content-Type: application/json
 {
     "id" : "1",
     "title" : "tituloModificado",
-    "categoria" : "catModificada",
-    "autor" : "autorModificado",
-    "redaccion": "redacModificado",
+    "category" : "catModificada",
+    "author" : "autorModificado",
+    "redaction": "redacModificado",
     "image" : "urlModificada",
-    "dias" : "10"
+    "days" : "10"
 }
 
 ###

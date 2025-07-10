@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express"
 import dotenv from "dotenv"
-import { listaNoticias, noticia } from "./noticias"
+import { listNews, news } from "./News"
 import { Games, Game } from "./games"
 import bodyParser from "body-parser"
 import cors from "cors"
@@ -26,21 +26,21 @@ app.listen(PORT, () => {
 
 // Endpoints Noticias
 app.get("/noticias",(req : Request , resp : Response) => {
-    const lista = listaNoticias
+    const lista = listNews
     resp.json(lista)
 })
 
 app.post("/noticias",(req : Request , resp : Response) =>{
     const nota = req.body
-    const listaNot = listaNoticias
+    const listaNot = listNews
 
     if(nota.id == undefined ||
         nota.title == undefined ||
-        nota.categoria == undefined ||
-        nota.autor == undefined ||
-        nota.redaccion == undefined ||
+        nota.category == undefined ||
+        nota.author == undefined ||
+        nota.redaction == undefined ||
         nota.image == undefined ||
-        nota.dias == undefined
+        nota.days == undefined
     )
     {
         resp.status(400).json({
@@ -49,21 +49,14 @@ app.post("/noticias",(req : Request , resp : Response) =>{
         return
     }
 
-    if (listaNot[nota.id]) {
-        resp.status(400).json({
-          msg: "La noticia con ese ID ya existe"
-        });
-        return;
-    }
-
     listaNot.push({
         id : nota.id,
         title : nota.title,
-        categoria : nota.categoria,
-        autor : nota.autor,
-        redaccion: nota.redaccion,
+        category : nota.category,
+        author : nota.author,
+        redaction: nota.redaction,
         image : nota.image,
-        dias : nota.dias
+        days : nota.days
     })
 
     resp.json({
@@ -74,7 +67,7 @@ app.post("/noticias",(req : Request , resp : Response) =>{
 app.put("/noticias/:id",(req : Request , resp : Response) => {
     const nota = req.body
     const notaId = req.params.id
-    const listaNot = listaNoticias
+    const listaNot = listNews
 
     if(notaId == undefined)
     {
@@ -85,9 +78,9 @@ app.put("/noticias/:id",(req : Request , resp : Response) => {
     }
     if(nota.id == undefined ||
         nota.title == undefined ||
-        nota.categoria == undefined ||
-        nota.autor == undefined ||
-        nota.redaccion == undefined ||
+        nota.category == undefined ||
+        nota.author == undefined ||
+        nota.redaction == undefined ||
         nota.image == undefined
     )
     {
@@ -101,9 +94,9 @@ app.put("/noticias/:id",(req : Request , resp : Response) => {
     {
         if(nt.id.toString() == notaId){
             nt.title = nota.title
-            nt.categoria = nota.categoria
-            nt.autor = nota.autor
-            nt.redaccion = nota.redaccion
+            nt.category = nota.category
+            nt.author = nota.author
+            nt.redaction = nota.redaction
             nt.image = nota.image
             resp.json({
                 msg : "Noticia editada correctamente"
@@ -119,9 +112,9 @@ app.put("/noticias/:id",(req : Request , resp : Response) => {
 
 app.delete("/noticias/:id",(req : Request , resp : Response) => {
     const notaId = req.params.id
-    const lista = listaNoticias
+    const list = listNews
 
-    const indiceAEliminar = lista.findIndex((nt : noticia) => {
+    const indiceAEliminar = list.findIndex((nt : news) => {
         return nt.id.toString() == notaId
     })
 
@@ -132,7 +125,7 @@ app.delete("/noticias/:id",(req : Request , resp : Response) => {
         return
     }
 
-    lista.splice(indiceAEliminar, 1)
+    list.splice(indiceAEliminar, 1)
 
     resp.json({
         msg : "Noticia eliminada correctamente"
