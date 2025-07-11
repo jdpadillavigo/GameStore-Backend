@@ -15,10 +15,13 @@ datasource db {
 }
 
 model Noticia {
-  id Int @id @default(autoincrement())
+  id Int @id
   title String
-  text String
-  active Boolean
+  category String
+  author String
+  redaction String
+  image String
+  days Int
 }
 
 model Usuario {

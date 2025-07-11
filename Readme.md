@@ -13,13 +13,13 @@
 ```json
 [
     {
-        "id" : "1",
+        "id" : 1,
         "title" : "titulo",
         "categoria" : "accion",
         "autor" : "nintendo",
         "redaccion" : "Los videojuegos ...",
         "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png",
-        "dias" : "100"
+        "dias" : 100
     }, {}, {}, ...
 ]
 ```
@@ -32,13 +32,13 @@
 
 ```json
 {
-    "id" : "1",
+    "id" : 1,
     "title" : "titulo",
     "categoria" : "accion",
     "autor" : "nintendo",
     "redaccion" : "Los videojuegos ...",
     "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png",
-    "dias" : "100"
+    "dias" : 100
 }
 ```
 
@@ -58,13 +58,13 @@
 
 ```json
 {
-    "id" : "2",
+    "id" : 2,
     "title" : "titulo2",
     "categoria" : "accion2",
     "autor" : "nintendo2",
     "redaccion" : "Los juegos ...",
     "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png",
-    "dias" : "100"
+    "dias" : 100
 }
 ```
 

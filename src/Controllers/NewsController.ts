@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express"
-import { listNews, news } from "../News"
 import { PrismaClient } from "../generated/prisma"
 
 const NewsController = () => {
@@ -12,9 +11,9 @@ const NewsController = () => {
         resp.json(noticias)
     })
 
-    router.post("/", (req: Request, resp: Response) => {
+    router.post("/", async (req: Request, resp: Response) => {
+        const prisma = new PrismaClient()
         const nota = req.body
-        const listaNot = listNews
 
         if (nota.id == undefined ||
             nota.title == undefined ||
@@ -30,25 +29,20 @@ const NewsController = () => {
             return
         }
 
-        listaNot.push({
-            id: nota.id,
-            title: nota.title,
-            category: nota.category,
-            author: nota.author,
-            redaction: nota.redaction,
-            image: nota.image,
-            days: nota.days
+        const noticiaCreada = await prisma.noticia.create({
+            data: nota
         })
 
-        resp.json({
-            msg: "Noticia agregada correctamente"
+       resp.json({
+            msg: "Noticia agregada correctamente",
+            nota: noticiaCreada
         })
     })
 
-    router.put("/:id", (req: Request, resp: Response) => {
+    router.put("/:id", async (req: Request, resp: Response) => {
+        const prisma = new PrismaClient()
         const nota = req.body
-        const notaId = req.params.id
-        const listaNot = listNews
+        const notaId = parseInt(req.params.id)
 
         if (notaId == undefined) {
             resp.status(400).json({
@@ -69,45 +63,49 @@ const NewsController = () => {
             return
         }
 
-        for (let nt of listaNot) {
-            if (nt.id.toString() == notaId) {
-                nt.title = nota.title
-                nt.category = nota.category
-                nt.author = nota.author
-                nt.redaction = nota.redaction
-                nt.image = nota.image
-                resp.json({
-                    msg: "Noticia editada correctamente"
-                })
-                return
-            }
-        }
-
-        resp.status(400).json({
-            msg: "No existe noticia con ese ID"
-        })
-    })
-
-    router.delete("/:id", (req: Request, resp: Response) => {
-        const notaId = req.params.id
-        const list = listNews
-
-        const indiceAEliminar = list.findIndex((nt: news) => {
-            return nt.id.toString() == notaId
-        })
-
-        if (indiceAEliminar == -1) {
+        try {
+            const noticiaModificada = await prisma.noticia.update({
+                where : {
+                    id : notaId
+                },
+                data : nota
+            })
+            resp.json({
+                msg: "Noticia editada correctamente",
+                nota: noticiaModificada
+            })
+        } catch (e) {
             resp.status(400).json({
                 msg: "No existe noticia con ese ID"
             })
+        }
+    })
+
+    router.delete("/:id", async (req: Request, resp: Response) => {
+        const prisma = new PrismaClient()
+        const notaId = parseInt(req.params.id)
+
+        if (notaId == undefined) {
+            resp.status(400).json({
+                msg: "Debe enviar el ID como parte del path"
+            })
             return
         }
-
-        list.splice(indiceAEliminar, 1)
-
-        resp.json({
-            msg: "Noticia eliminada correctamente"
-        })
+        try {
+            await prisma.noticia.delete({
+                where : {
+                    id : notaId
+                }
+            })
+            resp.json({
+                msg: "Noticia eliminada correctamente"
+            })
+        } catch (e) {
+            resp.status(400).json({
+                msg : "No existe noticia con ese ID"
+            })
+            return
+        }
     })
     
     return router
