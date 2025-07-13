@@ -31,8 +31,6 @@ model Usuario {
   name String
   token String
   status Boolean
-  ventas Venta[]
-  calificaciones Calificacion[]
 }
 
 model Venta {
@@ -40,8 +38,6 @@ model Venta {
   date String
   code String
   amountPaid Int
-  usuarioId Int
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
   juegoId Int
   juego Juego @relation(fields: [juegoId], references: [id])
 }
@@ -50,8 +46,6 @@ model Calificacion {
   id Int @id @default(autoincrement())
   ranking String
   comment String
-  usuarioId Int
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
   juegoId Int
   juego Juego @relation(fields: [juegoId], references: [id])
 }
