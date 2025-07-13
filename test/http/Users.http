@@ -1,0 +1,39 @@
+### Obtener todos los usuarios
+GET http://localhost:5000/usuarios HTTP/1.1
+
+###
+
+### Registrar nuevo usuario
+POST http://localhost:5000/usuarios HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Joan@gmail.com",
+    "pasword": "123456",
+    "name": "Joan Lazo"
+}
+
+###
+
+### Iniciar sesión
+POST http://localhost:5000/usuarios/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Joan@gmail.com",
+    "pasword": "123456"
+}
+
+###
+
+### Actualizar usuario (ID = 1)
+PUT http://localhost:5000/usuarios/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Joan@gmail.com",
+    "pasword": "nuevaclave123",
+    "name": "Joan Actualizada",
+    "status": true
+}
+
