@@ -21,7 +21,7 @@ app.get("/", (req: Request, resp: Response) => {
 
 app.use("/noticias", NewsController())
 app.use("/juegos",GamesController())
-app.use("",UsersController())
+app.use("/a/usuarios",UsersController())
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado en puerto ${PORT}`);

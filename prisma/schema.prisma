@@ -27,10 +27,11 @@ model Noticia {
 model Usuario {
   id Int @id @default(autoincrement())
   email String @unique
-  pasword String
+  password String
   name String
-  token String
-  status Boolean
+  country String
+  token Int
+  role String
   ventas Venta[]
   calificaciones Calificacion[]
 }
