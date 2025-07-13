@@ -36,7 +36,7 @@ const UsersController = () => {
         })
 
         if (existente) {
-            resp.status(409).json({
+            resp.status(400).json({
                 msg: "Ya existe un usuario con ese correo"
             })
             return
@@ -83,7 +83,7 @@ const UsersController = () => {
         }
 
         if (usuario.password !== password) {
-            resp.status(401).json({
+            resp.status(400).json({
                 msg: "Contraseña incorrecta"
             })
             return

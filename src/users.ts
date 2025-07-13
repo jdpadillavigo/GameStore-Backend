@@ -1,45 +1,57 @@
-export interface User {
-  id: number;
-  nombre: string;
-  correo: string;
-  pais: string;
-  rol: 'admin' | 'user';
+export interface users {
+    id: number
+    email: string
+    password: string
+    name: string
+    country: string
+    role: string
+    token: number
 }
 
-export const Users: User[] = [
+export let listUsers : users[] = [
   {
     id: 1,
-    nombre: "Juan Pérez",
-    correo: "juan.perez@example.com",
-    pais: "Perú",
-    rol: "user"
+    email: 'omar@gmail.com',
+    password: '1234',
+    name: 'Omar Portuguez',
+    country: "Perú",
+    role: "admin",
+    token: 123456
   },
   {
     id: 2,
-    nombre: "Ana Gómez",
-    correo: "ana.gomez@example.com",
-    pais: "Argentina",
-    rol: "admin"
+    email: 'joan@gmail.com',
+    password: '1234',
+    name: 'Joan Lazo',
+    country: "Perú",
+    role: "admin",
+    token: 123457
   },
   {
     id: 3,
-    nombre: "Carlos Ríos",
-    correo: "carlos.rios@example.com",
-    pais: "México",
-    rol: "user"
+    email: 'jose@gmail.com',
+    password: '1234',
+    name: 'Jose Matos',
+    country: "Perú",
+    role: "admin",
+    token: 123458
   },
   {
     id: 4,
-    nombre: "Luisa Fernández",
-    correo: "luisa.fernandez@example.com",
-    pais: "Chile",
-    rol: "user"
+    email: 'juan@gmail.com',
+    password: '1234',
+    name: 'Juan Padilla',
+    country: "Perú",
+    role: "admin",
+    token: 123459
   },
   {
     id: 5,
-    nombre: "Pedro Morales",
-    correo: "pedro.morales@example.com",
-    pais: "Colombia",
-    rol: "user"
-  }
-];
+    email: 'giomar@gmail.com',
+    password: '1234',
+    name: 'Giomar Castillo',
+    country: "Perú",
+    role: "admin",
+    token: 123460
+  },
+]
