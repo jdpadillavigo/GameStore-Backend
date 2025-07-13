@@ -8,9 +8,9 @@ POST http://localhost:5000/usuarios HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "Joan@gmail.com",
+    "email": "usuarioej@gmail.com",
     "pasword": "123456",
-    "name": "Joan Lazo"
+    "name": "usuario ej"
 }
 
 ###
@@ -20,7 +20,7 @@ POST http://localhost:5000/usuarios/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "Joan@gmail.com",
+    "email": "usuarioej@gmail.com",
     "pasword": "123456"
 }
 
@@ -31,9 +31,9 @@ PUT http://localhost:5000/usuarios/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "Joan@gmail.com",
-    "pasword": "nuevaclave123",
-    "name": "Joan Actualizada",
+    "email": "usuarioej2@gmail.com",
+    "pasword": "12345678",
+    "name": "usuario ej actualizado",
     "status": true
 }
 
