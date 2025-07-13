@@ -140,4 +140,5 @@ const UsersController = () => {
     return router
 }
 
-export default UsersController
+export default UsersController;
+
