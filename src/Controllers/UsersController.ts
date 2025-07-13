@@ -1,5 +1,8 @@
 import express, { Request, Response } from "express"
+import { listUsers, users } from "../Users"
 import { PrismaClient } from "../generated/prisma"
+import { randomInt } from "crypto"
+
 
 const UsersController = () => {
     const router = express.Router()
@@ -12,14 +15,15 @@ const UsersController = () => {
     })
 
     // POST - Registrar usuario (para Register.tsx)
-    router.post("/", async (req: Request, resp: Response) => {
+    router.post("/register", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuario = req.body
 
         if (
             usuario.email == undefined ||
-            usuario.pasword == undefined ||
-            usuario.name == undefined
+            usuario.password == undefined ||
+            usuario.name == undefined ||
+            usuario.country == undefined
         ) {
             resp.status(400).json({
                 msg: "Debe llenar todos los campos"
@@ -37,14 +41,15 @@ const UsersController = () => {
             })
             return
         }
-
+        const role = usuario.name.trim().toLowerCase().startsWith("Admin") ? "admin" : "usuarios";
         const usuarioCreado = await prisma.usuario.create({
             data: {
                 email: usuario.email,
-                pasword: usuario.pasword,
+                password: usuario.password,
                 name: usuario.name,
-                token: "",
-                status: true
+                country: usuario.country,
+                token: randomInt(100_000, 1_000_000),
+                role: role,
             }
         })
 
@@ -57,9 +62,9 @@ const UsersController = () => {
     // POST - Login (para Login.tsx)
     router.post("/login", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
-        const { email, pasword } = req.body
+        const { email, password } = req.body
 
-        if (email == undefined || pasword == undefined) {
+        if (email == undefined || password == undefined) {
             resp.status(400).json({
                 msg: "Debe ingresar email y contraseña"
             })
@@ -77,7 +82,7 @@ const UsersController = () => {
             return
         }
 
-        if (usuario.pasword !== pasword) {
+        if (usuario.password !== password) {
             resp.status(401).json({
                 msg: "Contraseña incorrecta"
             })
@@ -104,10 +109,12 @@ const UsersController = () => {
         }
 
         if (
+            usuario.id == undefined ||
             usuario.email == undefined ||
-            usuario.pasword == undefined ||
+            usuario.password == undefined ||
             usuario.name == undefined ||
-            usuario.status == undefined
+            usuario.country == undefined ||
+            usuario.role == undefined
         ) {
             resp.status(400).json({
                 msg: "Debe llenar todos los campos"
@@ -119,10 +126,12 @@ const UsersController = () => {
             const usuarioModificado = await prisma.usuario.update({
                 where: { id: usuarioId },
                 data: {
+                    id: usuario.id,
                     email: usuario.email,
-                    pasword: usuario.pasword,
+                    password: usuario.password,
                     name: usuario.name,
-                    status: usuario.status
+                    country: usuario.country,
+                    role: usuario.role
                 }
             })
 
