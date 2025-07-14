@@ -25,10 +25,10 @@ export const Games: Game[] = [
         description: "Un juego de acción y aventura de mundo abierto, donde puedes explorar una ciudad ficticia, cometer crímenes y vivir aventuras con diferentes personajes.",
         trailer: "https://www.youtube.com/embed/nzV5_Uhu08A",
         images: [
-            "/images/games/gta_v_1.jpg",
-            "/images/games/gta_v_2.jpg",
-            "/images/games/gta_v_3.jpg",
-            "/images/games/gta_v_4.jpg"
+            "/GameStore-Frontend/images/games/gta_v_1.jpg",
+            "/GameStore-Frontend/images/games/gta_v_2.jpg",
+            "/GameStore-Frontend/images/games/gta_v_3.jpg",
+            "/GameStore-Frontend/images/games/gta_v_4.jpg"
         ],
         reviews: [
             {
@@ -54,10 +54,10 @@ export const Games: Game[] = [
         description: "Un juego de carreras lleno de acción y adrenalina, con la posibilidad de personalizar vehículos y competir en circuitos nocturnos.",
         trailer: "https://www.youtube.com/embed/9ewiJJe_nYI",
         images: [
-            "/images/games/nfs_heat_1.jpg",
-            "/images/games/nfs_heat_2.jpg",
-            "/images/games/nfs_heat_3.jpg",
-            "/images/games/nfs_heat_4.jpg"
+            "/GameStore-Frontend/images/games/nfs_heat_1.jpg",
+            "/GameStore-Frontend/images/games/nfs_heat_2.jpg",
+            "/GameStore-Frontend/images/games/nfs_heat_3.jpg",
+            "/GameStore-Frontend/images/games/nfs_heat_4.jpg"
         ],
         reviews: [
             {
@@ -83,10 +83,10 @@ export const Games: Game[] = [
         description: "Un juego de rol de acción en un mundo abierto donde los jugadores exploran un vasto mundo, luchan contra jefes desafiantes y mejoran sus habilidades.",
         trailer: "https://www.youtube.com/embed/AKXiKBnzpBQ",
         images: [
-            "/images/games/elden_ring_1.jpg",
-            "/images/games/elden_ring_2.jpg",
-            "/images/games/elden_ring_3.jpg",
-            "/images/games/elden_ring_4.jpg"
+            "/GameStore-Frontend/images/games/elden_ring_1.jpg",
+            "/GameStore-Frontend/images/games/elden_ring_2.jpg",
+            "/GameStore-Frontend/images/games/elden_ring_3.jpg",
+            "/GameStore-Frontend/images/games/elden_ring_4.jpg"
         ],
         reviews: [
             {
@@ -112,10 +112,10 @@ export const Games: Game[] = [
         description: "Un juego de rol y acción ambientado en un futuro distópico, donde tomas el rol de un mercenario en la ciudad de Night City.",
         trailer: "https://www.youtube.com/embed/nLhWWoAaZ0Q",
         images: [
-            "/images/games/cyberpunk_2077_1.jpg",
-            "/images/games/cyberpunk_2077_2.jpg",
-            "/images/games/cyberpunk_2077_3.jpg",
-            "/images/games/cyberpunk_2077_4.jpg"
+            "/GameStore-Frontend/images/games/cyberpunk_2077_1.jpg",
+            "/GameStore-Frontend/images/games/cyberpunk_2077_2.jpg",
+            "/GameStore-Frontend/images/games/cyberpunk_2077_3.jpg",
+            "/GameStore-Frontend/images/games/cyberpunk_2077_4.jpg"
         ],
         reviews: [
             {
@@ -141,10 +141,10 @@ export const Games: Game[] = [
         description: "Un juego de acción y aventura ambientado en el Viejo Oeste, donde los jugadores toman el rol de un forajido que explora un mundo abierto y toma decisiones clave.",
         trailer: "https://www.youtube.com/embed/eaW0tYpxyp0",
         images: [
-            "/images/games/rdr2_1.jpg",
-            "/images/games/rdr2_2.jpg",
-            "/images/games/rdr2_3.jpg",
-            "/images/games/rdr2_4.jpg"
+            "/GameStore-Frontend/images/games/rdr2_1.jpg",
+            "/GameStore-Frontend/images/games/rdr2_2.jpg",
+            "/GameStore-Frontend/images/games/rdr2_3.jpg",
+            "/GameStore-Frontend/images/games/rdr2_4.jpg"
         ],
         reviews: [
             {
@@ -170,10 +170,10 @@ export const Games: Game[] = [
         description: "Un juego de aventura y acción en un mundo post-apocalíptico, donde controlas a Aloy, una cazadora que combate máquinas en un entorno vasto y diverso.",
         trailer: "https://www.youtube.com/embed/Lq594XmpPBg",
         images: [
-            "/images/games/horizon_forbidden_west_1.jpg",
-            "/images/games/horizon_forbidden_west_2.jpg",
-            "/images/games/horizon_forbidden_west_3.jpg",
-            "/images/games/horizon_forbidden_west_4.jpg"
+            "/GameStore-Frontend/images/games/horizon_forbidden_west_1.jpg",
+            "/GameStore-Frontend/images/games/horizon_forbidden_west_2.jpg",
+            "/GameStore-Frontend/images/games/horizon_forbidden_west_3.jpg",
+            "/GameStore-Frontend/images/games/horizon_forbidden_west_4.jpg"
         ],
         reviews: [
             {
@@ -199,10 +199,10 @@ export const Games: Game[] = [
         description: "Un juego de acción y aventura ambientado en el Japón feudal, donde tomas el rol de un samurái que lucha por defender su hogar.",
         trailer: "https://www.youtube.com/embed/iqysmS4lxwQ",
         images: [
-            "/images/games/ghost_of_tsushima_1.jpg",
-            "/images/games/ghost_of_tsushima_2.jpg",
-            "/images/games/ghost_of_tsushima_3.jpg",
-            "/images/games/ghost_of_tsushima_4.jpg"
+            "/GameStore-Frontend/images/games/ghost_of_tsushima_1.jpg",
+            "/GameStore-Frontend/images/games/ghost_of_tsushima_2.jpg",
+            "/GameStore-Frontend/images/games/ghost_of_tsushima_3.jpg",
+            "/GameStore-Frontend/images/games/ghost_of_tsushima_4.jpg"
         ],
         reviews: [
             {
@@ -228,10 +228,10 @@ export const Games: Game[] = [
         description: "Un juego de acción y aventura ambientado en la época vikinga, donde controlas a un guerrero vikingo mientras exploras un mundo abierto y realizas misiones.",
         trailer: "https://www.youtube.com/embed/ssrNcwxALS4",
         images: [
-            "/images/games/assassins_creed_valhalla_1.jpg",
-            "/images/games/assassins_creed_valhalla_2.jpg",
-            "/images/games/assassins_creed_valhalla_3.jpg",
-            "/images/games/assassins_creed_valhalla_4.jpg"
+            "/GameStore-Frontend/images/games/assassins_creed_valhalla_1.jpg",
+            "/GameStore-Frontend/images/games/assassins_creed_valhalla_2.jpg",
+            "/GameStore-Frontend/images/games/assassins_creed_valhalla_3.jpg",
+            "/GameStore-Frontend/images/games/assassins_creed_valhalla_4.jpg"
         ],
         reviews: [
             {
@@ -257,10 +257,10 @@ export const Games: Game[] = [
         description: "Un juego de acción y aventura basado en el famoso superhéroe Spider-Man, donde puedes balancearte por la ciudad de Nueva York y luchar contra diversos villanos.",
         trailer: "https://www.youtube.com/embed/1E051WtpyWg",
         images: [
-            "/images/games/spiderman_1.jpg",
-            "/images/games/spiderman_2.jpg",
-            "/images/games/spiderman_3.jpg",
-            "/images/games/spiderman_4.jpg"
+            "/GameStore-Frontend/images/games/spiderman_1.jpg",
+            "/GameStore-Frontend/images/games/spiderman_2.jpg",
+            "/GameStore-Frontend/images/games/spiderman_3.jpg",
+            "/GameStore-Frontend/images/games/spiderman_4.jpg"
         ],
         reviews: [
             {
@@ -286,10 +286,10 @@ export const Games: Game[] = [
         description: "Un juego de survival horror donde controlas a Leon S. Kennedy en una misión para rescatar a la hija del presidente mientras lucha contra criaturas infectadas.",
         trailer: "https://www.youtube.com/embed/j5Ic2z3_xp0",
         images: [
-            "/images/games/resident_evil_4_remake_1.jpg",
-            "/images/games/resident_evil_4_remake_2.jpg",
-            "/images/games/resident_evil_4_remake_3.jpg",
-            "/images/games/resident_evil_4_remake_4.jpg"
+            "/GameStore-Frontend/images/games/resident_evil_4_remake_1.jpg",
+            "/GameStore-Frontend/images/games/resident_evil_4_remake_2.jpg",
+            "/GameStore-Frontend/images/games/resident_evil_4_remake_3.jpg",
+            "/GameStore-Frontend/images/games/resident_evil_4_remake_4.jpg"
         ],
         reviews: [
             {
