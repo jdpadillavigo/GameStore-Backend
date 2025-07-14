@@ -83,8 +83,15 @@ const UsersController = () => {
         }
 
         resp.json({
-            msg: "Inicio de sesión exitoso"
-        })
+            msg: "Inicio de sesión exitoso",
+            usuario: {
+                id: usuario.id,
+                email: usuario.email,
+                name: usuario.name,
+                country: usuario.country,
+                role: usuario.role
+            }
+        });
     })
 
     router.put("/a/usuarios/:id", async (req: Request, resp: Response) => {
