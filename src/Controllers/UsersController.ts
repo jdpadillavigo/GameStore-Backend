@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express"
-import { listUsers, users } from "../Users"
 import { PrismaClient } from "../generated/prisma"
 import { randomInt } from "crypto"
 
@@ -54,8 +53,7 @@ const UsersController = () => {
         })
 
         resp.json({
-            msg: "Usuario registrado correctamente",
-            usuario: usuarioCreado
+            msg: "Usuario registrado correctamente"
         })
     })
 
@@ -76,7 +74,7 @@ const UsersController = () => {
         })
 
         if (!usuario) {
-            resp.status(404).json({
+            resp.status(400).json({
                 msg: "Usuario no registrado"
             })
             return
@@ -90,8 +88,7 @@ const UsersController = () => {
         }
 
         resp.json({
-            msg: "Inicio de sesión exitoso",
-            usuario
+            msg: "Inicio de sesión exitoso"
         })
     })
 
@@ -109,7 +106,6 @@ const UsersController = () => {
         }
 
         if (
-            usuario.id == undefined ||
             usuario.email == undefined ||
             usuario.password == undefined ||
             usuario.name == undefined ||
@@ -125,8 +121,7 @@ const UsersController = () => {
         try {
             const usuarioModificado = await prisma.usuario.update({
                 where: { id: usuarioId },
-                data: {
-                    id: usuario.id,
+                data: {                    
                     email: usuario.email,
                     password: usuario.password,
                     name: usuario.name,
@@ -136,8 +131,7 @@ const UsersController = () => {
             })
 
             resp.json({
-                msg: "Usuario actualizado correctamente",
-                usuario: usuarioModificado
+                msg: "Usuario actualizado correctamente"
             })
         } catch (e) {
             resp.status(400).json({
@@ -149,4 +143,4 @@ const UsersController = () => {
     return router
 }
 
-export default UsersController
+export default UsersController;
