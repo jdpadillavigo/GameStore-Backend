@@ -1,19 +1,18 @@
-### Obtener todos los usuarios
 GET http://localhost:5000/a/usuarios HTTP/1.1
 
-### Registrar nuevo usuario
-POST http://localhost:5000/a/usuarios/register HTTP/1.1
+### 
+POST http://localhost:5000/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "usuadsdassj@gmail.com",
+    "email": "usuadsdsj@gmail.com",
     "password": "123456",
     "name": "usuario ej",
     "country": "Perú"
 }
 
-### Iniciar sesión
-POST http://localhost:5000/a/usuarios/login HTTP/1.1
+### 
+POST http://localhost:5000/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -21,14 +20,14 @@ Content-Type: application/json
     "password": "123456"
 }
 
-### Actualizar usuario (ID = 1)
-PUT http://localhost:5000/a/usuarios/1 HTTP/1.1
+### 
+PUT http://localhost:5000/a/usuarios/4 HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "usuarioej2@gmail.com",
-    "password": "12345678",
-    "name": "usuario ej actualizado",
+    "email": "usuadsdsj@gmail.com",
+    "password": "123456",
+    "name": "usuario ej",
     "country": "Perú",
-    "role": "admin"
+    "role": "usuario"
 }

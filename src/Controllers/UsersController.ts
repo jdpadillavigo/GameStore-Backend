@@ -1,19 +1,15 @@
 import express, { Request, Response } from "express"
 import { PrismaClient } from "../generated/prisma"
-import { randomInt } from "crypto"
-
 
 const UsersController = () => {
     const router = express.Router()
 
-    // GET - Obtener todos los usuarios
-    router.get("/", async (req: Request, resp: Response) => {
+    router.get("/a/usuarios", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuarios = await prisma.usuario.findMany()
         resp.json(usuarios)
     })
 
-    // POST - Registrar usuario (para Register.tsx)
     router.post("/register", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuario = req.body
@@ -40,15 +36,15 @@ const UsersController = () => {
             })
             return
         }
-        const role = usuario.name.trim().toLowerCase().startsWith("Admin") ? "admin" : "usuarios";
+        const role = usuario.name.trim().startsWith("Admin") ? "admin" : "usuario";
         const usuarioCreado = await prisma.usuario.create({
             data: {
                 email: usuario.email,
                 password: usuario.password,
                 name: usuario.name,
                 country: usuario.country,
-                token: randomInt(100_000, 1_000_000),
-                role: role,
+                token: usuario.token,
+                role: role
             }
         })
 
@@ -57,7 +53,6 @@ const UsersController = () => {
         })
     })
 
-    // POST - Login (para Login.tsx)
     router.post("/login", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const { email, password } = req.body
@@ -92,8 +87,7 @@ const UsersController = () => {
         })
     })
 
-    // PUT - Actualizar datos del usuario (para edición futura)
-    router.put("/:id", async (req: Request, resp: Response) => {
+    router.put("/a/usuarios/:id", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuario = req.body
         const usuarioId = parseInt(req.params.id)
