@@ -27,10 +27,13 @@ model Noticia {
 model Usuario {
   id Int @id @default(autoincrement())
   email String @unique
-  pasword String
+  password String
   name String
-  token String
-  status Boolean
+  country String
+  token Int
+  role String
+  ventas Venta[]
+  calificaciones Calificacion[]
 }
 
 model Venta {
@@ -39,6 +42,8 @@ model Venta {
   discount Int
   juegoId String @unique
   juego Juego @relation(fields: [juegoId], references: [id])
+  userId Int
+  Usuario Usuario @relation(fields: [userId], references: [id])
 }
 
 model Calificacion {
@@ -48,6 +53,8 @@ model Calificacion {
   stars Int
   juegoId String
   juego Juego @relation(fields: [juegoId], references: [id])
+  userId Int
+  Usuario Usuario @relation(fields: [userId], references: [id])
 }
 
 model Juego {

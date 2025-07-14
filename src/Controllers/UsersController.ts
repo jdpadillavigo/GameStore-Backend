@@ -4,22 +4,21 @@ import { PrismaClient } from "../generated/prisma"
 const UsersController = () => {
     const router = express.Router()
 
-    // GET - Obtener todos los usuarios
-    router.get("/", async (req: Request, resp: Response) => {
+    router.get("/a/usuarios", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuarios = await prisma.usuario.findMany()
         resp.json(usuarios)
     })
 
-    // POST - Registrar usuario (para Register.tsx)
-    router.post("/", async (req: Request, resp: Response) => {
+    router.post("/register", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuario = req.body
 
         if (
             usuario.email == undefined ||
-            usuario.pasword == undefined ||
-            usuario.name == undefined
+            usuario.password == undefined ||
+            usuario.name == undefined ||
+            usuario.country == undefined
         ) {
             resp.status(400).json({
                 msg: "Debe llenar todos los campos"
@@ -32,34 +31,33 @@ const UsersController = () => {
         })
 
         if (existente) {
-            resp.status(409).json({
+            resp.status(400).json({
                 msg: "Ya existe un usuario con ese correo"
             })
             return
         }
-
+        const role = usuario.name.trim().startsWith("Admin") ? "admin" : "usuario";
         const usuarioCreado = await prisma.usuario.create({
             data: {
                 email: usuario.email,
-                pasword: usuario.pasword,
+                password: usuario.password,
                 name: usuario.name,
-                token: "",
-                status: true
+                country: usuario.country,
+                token: usuario.token,
+                role: role
             }
         })
 
         resp.json({
-            msg: "Usuario registrado correctamente",
-            usuario: usuarioCreado
+            msg: "Usuario registrado correctamente"
         })
     })
 
-    // POST - Login (para Login.tsx)
     router.post("/login", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
-        const { email, pasword } = req.body
+        const { email, password } = req.body
 
-        if (email == undefined || pasword == undefined) {
+        if (email == undefined || password == undefined) {
             resp.status(400).json({
                 msg: "Debe ingresar email y contraseña"
             })
@@ -71,27 +69,25 @@ const UsersController = () => {
         })
 
         if (!usuario) {
-            resp.status(404).json({
+            resp.status(400).json({
                 msg: "Usuario no registrado"
             })
             return
         }
 
-        if (usuario.pasword !== pasword) {
-            resp.status(401).json({
+        if (usuario.password !== password) {
+            resp.status(400).json({
                 msg: "Contraseña incorrecta"
             })
             return
         }
 
         resp.json({
-            msg: "Inicio de sesión exitoso",
-            usuario
+            msg: "Inicio de sesión exitoso"
         })
     })
 
-    // PUT - Actualizar datos del usuario (para edición futura)
-    router.put("/:id", async (req: Request, resp: Response) => {
+    router.put("/a/usuarios/:id", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const usuario = req.body
         const usuarioId = parseInt(req.params.id)
@@ -105,9 +101,10 @@ const UsersController = () => {
 
         if (
             usuario.email == undefined ||
-            usuario.pasword == undefined ||
+            usuario.password == undefined ||
             usuario.name == undefined ||
-            usuario.status == undefined
+            usuario.country == undefined ||
+            usuario.role == undefined
         ) {
             resp.status(400).json({
                 msg: "Debe llenar todos los campos"
@@ -118,17 +115,17 @@ const UsersController = () => {
         try {
             const usuarioModificado = await prisma.usuario.update({
                 where: { id: usuarioId },
-                data: {
+                data: {                    
                     email: usuario.email,
-                    pasword: usuario.pasword,
+                    password: usuario.password,
                     name: usuario.name,
-                    status: usuario.status
+                    country: usuario.country,
+                    role: usuario.role
                 }
             })
 
             resp.json({
-                msg: "Usuario actualizado correctamente",
-                usuario: usuarioModificado
+                msg: "Usuario actualizado correctamente"
             })
         } catch (e) {
             resp.status(400).json({
