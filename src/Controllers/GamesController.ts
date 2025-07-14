@@ -1,143 +1,237 @@
-import express, { Request, Response } from "express"
-import { Games, Game } from "../games"
-import { PrismaClient } from "../generated/prisma"
+import express, { Request, Response } from "express";
+import { PrismaClient } from "../generated/prisma";
+
+const prisma = new PrismaClient();
 
 const GamesController = () => {
-    const router = express.Router()
+  const router = express.Router();
 
-    // Endpoints Juegos
-    router.get("/", (req: Request, resp: Response) => {
-        resp.json(Games)
-    })
-
-    router.post("/", (req: Request, resp: Response) => {
-        const newGame = req.body
-
-        if (
-            newGame.id === undefined ||
-            newGame.title === undefined ||
-            newGame.description === undefined ||
-            newGame.trailer === undefined ||
-            !Array.isArray(newGame.images) ||
-            newGame.release_date === undefined ||
-            newGame.category === undefined ||
-            typeof newGame.base_price !== 'number' ||
-            typeof newGame.discount !== 'number' ||
-            newGame.platform === undefined
-        ) {
-            resp.status(400).json({
-                msg: "Debe llenar todos los campos"
-            })
-            return
+  // Obtener todos los juegos con sus relaciones
+  router.get("/", async (_req: Request, res: Response) => {
+  try {
+    const juegos = await prisma.juego.findMany({
+      include: {
+        venta: true,
+        calificaciones: true,
+        plataformas: {
+          include: { plataforma: true }
+        },
+        categorias: {
+          include: { categoria: true }
         }
+      }
+    });
 
-        if (Games[newGame.id]) {
-            resp.status(400).json({
-                msg: "El juego con ese ID ya existe"
+    // Formatear los juegos al formato solicitado
+    const juegosFormateados = juegos.map(juego => {
+      return {
+        id: juego.id,
+        title: juego.title,
+        description: juego.description,
+        trailer: juego.trailer,
+        images: juego.images,
+        reviews: juego.calificaciones.map(c => ({
+          author: c.author,
+          message: c.message,
+          stars: c.stars
+        })),
+        release_date: juego.date_release,
+        category: juego.categorias.map(c => c.categoria.name).join(", "),
+        base_price: juego.venta?.base_price ?? 0,
+        discount: juego.venta?.discount ?? 0,
+        platform: juego.plataformas.map(p => p.plataforma.name).join(", ")
+      };
+    });
+
+    res.json(juegosFormateados);
+  } catch (error) {
+    res.status(400).json({ 
+      msg: "Error al obtener los juegos" 
+    });
+  }
+});
+
+  // Crear nuevo juego
+  router.post("/", async (req: any, res: any) => {
+  const {
+    id,
+    title,
+    description,
+    trailer,
+    images,
+    release_date,
+    category,
+    base_price,
+    discount,
+    platform,
+    reviews = []
+  } = req.body;
+
+  const categories = typeof category === "string" ? category.split(",").map(s => s.trim()) : [];
+  const platforms = typeof platform === "string" ? platform.split(",").map(s => s.trim()) : [];
+
+  if (!id || !title || !description || !trailer || !Array.isArray(images) || !release_date || !category || !platform || typeof base_price !== "number" || typeof discount !== "number") {
+    return res.status(400).json({ msg: "Debe llenar todos los campos correctamente." });
+  }
+
+  try {
+    const juego = await prisma.juego.create({
+      data: {
+        id,
+        title,
+        description,
+        trailer,
+        images,
+        date_release: release_date,
+        venta: {
+          create: { base_price, discount }
+        },
+        calificaciones: {
+          create: reviews.map((r: any) => ({
+            message: r.message,
+            stars: r.stars,
+            author: r.author ?? "Anon"
+          }))
+        },
+        categorias: {
+          create: await Promise.all(categories.map(async (catName: string) => {
+            const cat = await prisma.categoria.upsert({
+              where: { name: catName },
+              update: {},
+              create: { name: catName }
             });
-            return;
+            return { categoriaId: cat.id };
+          }))
+        },
+        plataformas: {
+          create: await Promise.all(platforms.map(async (platName: string) => {
+            const plat = await prisma.plataforma.upsert({
+              where: { name: platName },
+              update: {},
+              create: { name: platName }
+            });
+            return { plataformaId: plat.id };
+          }))
         }
+      }
+    });
 
-        Games.push({
-            id: newGame.id,
-            title: newGame.title,
-            description: newGame.description,
-            trailer: newGame.trailer,
-            images: newGame.images,
-            reviews: [],
-            release_date: newGame.release_date,
-            category: newGame.category,
-            base_price: newGame.base_price,
-            discount: newGame.discount,
-            platform: newGame.platform
-        })
+    res.json({ 
+      msg: "Juego agregado correctamente" 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      msg: "Error al agregar juego" 
+    });
+  }
+});
 
-        resp.json({
-            msg: "Juego agregado correctamente"
-        })
-    })
+  // Actualizar juego
+  router.put("/:id", async (req: any, res: any) => {
+  const juegoId = req.params.id;
+  const {
+    id,
+    title,
+    description,
+    trailer,
+    images,
+    release_date,
+    category,
+    base_price,
+    discount,
+    platform,
+    reviews = []
+  } = req.body;
 
-    router.put("/:id", (req: Request, resp: Response) => {
-        const gameId = decodeURIComponent(req.params.id)
-        const updatedGame = req.body
+  const categories = typeof category === "string" ? category.split(",").map(s => s.trim()) : [];
+  const platforms = typeof platform === "string" ? platform.split(",").map(s => s.trim()) : [];
 
-        if (
-            updatedGame.id === undefined ||
-            updatedGame.title === undefined ||
-            updatedGame.description === undefined ||
-            updatedGame.trailer === undefined ||
-            !Array.isArray(updatedGame.images) ||
-            updatedGame.release_date === undefined ||
-            updatedGame.category === undefined ||
-            typeof updatedGame.base_price !== "number" ||
-            typeof updatedGame.discount !== "number" ||
-            updatedGame.platform === undefined
-        ) {
-            resp.status(400).json({
-                msg: "Debe llenar todos los campos"
-            })
-            return
+  if (!id || !title || !description || !trailer || !Array.isArray(images) || !release_date || !category || !platform || typeof base_price !== "number" || typeof discount !== "number") {
+    return res.status(400).json({ msg: "Debe llenar todos los campos correctamente." });
+  }
+
+  try {
+    await prisma.categoriaJuego.deleteMany({ where: { juegoId } });
+    await prisma.plataformaJuego.deleteMany({ where: { juegoId } });
+    await prisma.calificacion.deleteMany({ where: { juegoId } });
+
+    const juego = await prisma.juego.update({
+      where: { id: juegoId },
+      data: {
+        id,
+        title,
+        description,
+        trailer,
+        images,
+        date_release: release_date,
+        venta: {
+          upsert: {
+            update: { base_price, discount },
+            create: { base_price, discount }
+          }
+        },
+        calificaciones: {
+          create: reviews.map((r: any) => ({
+            message: r.message,
+            stars: r.stars,
+            author: r.author ?? "Anon"
+          }))
+        },
+        categorias: {
+          create: await Promise.all(categories.map(async (catName: string) => {
+            const cat = await prisma.categoria.upsert({
+              where: { name: catName },
+              update: {},
+              create: { name: catName }
+            });
+            return { categoriaId: cat.id };
+          }))
+        },
+        plataformas: {
+          create: await Promise.all(platforms.map(async (platName: string) => {
+            const plat = await prisma.plataforma.upsert({
+              where: { name: platName },
+              update: {},
+              create: { name: platName }
+            });
+            return { plataformaId: plat.id };
+          }))
         }
+      }
+    });
 
-        let gameFound = false;
-        for (let g of Games) {
-            if (g.id.toString() === gameId || g.title === updatedGame.title) {
-                gameFound = true;
-                break;
-            }
-        }
+    res.json({ 
+      msg: "Juego actualizado correctamente" 
+    });
+  } catch (error) {
+    res.status(400).json({ 
+      msg: "Error al actualizar juego" 
+    });
+  }
+});
 
-        if (!gameFound) {
-            resp.status(404).json({
-                msg: "No existe un juego con ese ID o título"
-            })
-            return
-        }
+  // Eliminar juego
+  router.delete("/:id", async (req: Request, res: Response) => {
+    const juegoId = req.params.id;
 
-        for (let g of Games) {
-            if (g.id.toString() == gameId || g.title === updatedGame.title) {
-                g.id = updatedGame.id
-                g.title = updatedGame.title
-                g.description = updatedGame.description
-                g.trailer = updatedGame.trailer
-                g.images = updatedGame.images
-                g.release_date = updatedGame.release_date
-                g.category = updatedGame.category
-                g.base_price = updatedGame.base_price
-                g.discount = updatedGame.discount
-                g.platform = updatedGame.platform
+    try {
+      await prisma.categoriaJuego.deleteMany({ where: { juegoId } });
+      await prisma.plataformaJuego.deleteMany({ where: { juegoId } });
+      await prisma.calificacion.deleteMany({ where: { juegoId } });
+      await prisma.venta.deleteMany({ where: { juegoId } });
+      await prisma.juego.delete({ where: { id: juegoId } });
 
-                resp.json({
-                    msg: "Juego actualizado correctamente"
-                })
-                return
-            }
-        }
-    })
+      res.json({ 
+        msg: "Juego eliminado correctamente" 
+      });
+    } catch (error) {
+      res.status(400).json({ 
+        msg: "Error al eliminar juego",  
+      });
+    }
+  });
 
-    router.delete("/:id", (req: Request, resp: Response) => {
-        const gameId = decodeURIComponent(req.params.id)
-        const gamesData = Games
-
-        const indiceAEliminar = gamesData.findIndex((g: Game) => {
-            return g.id.toString() == gameId
-        })
-
-        if (indiceAEliminar == -1) {
-            resp.status(400).json({
-                msg: "No existe juego con ese ID"
-            })
-            return
-        }
-
-        gamesData.splice(indiceAEliminar, 1)
-
-        resp.json({
-            msg: "Juego eliminado correctamente"
-        })
-    })
-
-    return router
-}
+  return router;
+};
 
 export default GamesController;

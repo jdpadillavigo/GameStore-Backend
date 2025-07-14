@@ -19,7 +19,7 @@ Content-Type: application/json
     "category": "Acción",
     "base_price": 199,
     "discount": 20,
-    "platform": "Windows"
+    "platform": "Windows,xbox"
 }
 
 ###

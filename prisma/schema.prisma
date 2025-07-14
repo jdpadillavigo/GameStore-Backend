@@ -35,36 +35,36 @@ model Usuario {
 
 model Venta {
   id Int @id @default(autoincrement())
-  date String
-  code String
-  amountPaid Int
-  juegoId Int
+  base_price Int
+  discount Int
+  juegoId String @unique
   juego Juego @relation(fields: [juegoId], references: [id])
 }
 
 model Calificacion {
   id Int @id @default(autoincrement())
-  ranking String
-  comment String
-  juegoId Int
+  author String
+  message String
+  stars Int
+  juegoId String
   juego Juego @relation(fields: [juegoId], references: [id])
 }
 
 model Juego {
-  id Int @id @default(autoincrement())
-  name String
-  price Int
-  isOffer Boolean
-  status Boolean
-  categoriaId Int
-  categoria Categoria @relation(fields: [categoriaId], references: [id])
+  id String @id
+  title String
+  description String
+  trailer String
+  images String[]
+  date_release String
   calificaciones Calificacion[]
-  ventas Venta[]
   plataformas PlataformaJuego[]
+  categorias CategoriaJuego[]
+  venta Venta?
 }
 
 model PlataformaJuego {
-  juegoId Int
+  juegoId String
   plataformaId Int
   juego Juego @relation(fields: [juegoId], references: [id])
   plataforma Plataforma @relation(fields: [plataformaId], references: [id])
@@ -73,12 +73,20 @@ model PlataformaJuego {
 
 model Plataforma {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   juegos PlataformaJuego[]
+}
+
+model CategoriaJuego {
+  juegoId String
+  categoriaId Int
+  juego Juego @relation(fields: [juegoId], references: [id])
+  categoria Categoria @relation(fields: [categoriaId], references: [id])
+  @@id([juegoId, categoriaId])
 }
 
 model Categoria {
   id Int @id @default(autoincrement())
-  name String
-  juegos Juego[]
+  name String @unique
+  juegos CategoriaJuego[]
 }
