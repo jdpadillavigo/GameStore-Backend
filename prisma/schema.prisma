@@ -32,18 +32,6 @@ model Usuario {
   country String
   token Int
   role String
-  ventas Venta[]
-  calificaciones Calificacion[]
-}
-
-model Venta {
-  id Int @id @default(autoincrement())
-  base_price Int
-  discount Int
-  juegoId String @unique
-  juego Juego @relation(fields: [juegoId], references: [id])
-  userId Int
-  Usuario Usuario @relation(fields: [userId], references: [id])
 }
 
 model Calificacion {
@@ -53,8 +41,6 @@ model Calificacion {
   stars Int
   juegoId String
   juego Juego @relation(fields: [juegoId], references: [id])
-  userId Int
-  Usuario Usuario @relation(fields: [userId], references: [id])
 }
 
 model Juego {
@@ -63,11 +49,12 @@ model Juego {
   description String
   trailer String
   images String[]
-  date_release String
+  release_date String
+  base_price Float
+  discount Float
   calificaciones Calificacion[]
   plataformas PlataformaJuego[]
   categorias CategoriaJuego[]
-  venta Venta[]
 }
 
 model PlataformaJuego {
