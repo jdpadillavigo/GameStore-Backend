@@ -1,11 +1,11 @@
 export interface users {
-  id: number
-  email: string
-  password: string
-  name: string
-  country: string
-  role: string
-  token: number
+    id: number
+    email: string
+    password: string
+    name: string
+    country: string
+    role: string
+    token: number
 }
 
 export let listUsers : users[] = [
