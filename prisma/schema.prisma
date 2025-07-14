@@ -67,7 +67,7 @@ model Juego {
   calificaciones Calificacion[]
   plataformas PlataformaJuego[]
   categorias CategoriaJuego[]
-  venta Venta?
+  venta Venta[]
 }
 
 model PlataformaJuego {
