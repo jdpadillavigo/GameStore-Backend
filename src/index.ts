@@ -5,24 +5,39 @@ import cors from "cors"
 import NewsController from "./Controllers/NewsController"
 import GamesController from "./Controllers/GamesController"
 import UsersController from "./Controllers/UsersController"
+import { seedDatabaseIfEmpty } from "./database/seed"
 
 dotenv.config()
 const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors())
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : "*"
+  })
+)
 
 const PORT = process.env.PORT
 
 app.get("/", (req: Request, resp: Response) => {
-    resp.send("Endpoint raíz")
+  resp.send("Endpoint raíz")
 })
 
 app.use("/noticias", NewsController())
-app.use("/juegos",GamesController())
-app.use("/",UsersController())
+app.use("/juegos", GamesController())
+app.use("/", UsersController())
 
-app.listen(PORT, () => {
-  console.log(`Servidor iniciado en puerto ${PORT}`);
-});
+const start = async () => {
+  try {
+    await seedDatabaseIfEmpty()
+  } catch (err) {
+    console.error("Error ejecutando seed:", err)
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Servidor iniciado en puerto ${PORT}`);
+  });
+}
+
+start()

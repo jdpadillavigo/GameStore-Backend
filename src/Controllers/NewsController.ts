@@ -1,18 +1,16 @@
 import express, { Request, Response } from "express"
-import { PrismaClient } from "../generated/prisma"
+import prisma from "../database/prisma"
 
 const NewsController = () => {
     const router = express.Router()
 
     // Endpoints Noticias
     router.get("/", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const noticias = await prisma.noticia.findMany()
         resp.json(noticias)
     })
 
     router.post("/", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const nota = req.body
 
         if (nota.id == undefined ||
@@ -33,14 +31,13 @@ const NewsController = () => {
             data: nota
         })
 
-       resp.json({
+        resp.json({
             msg: "Noticia agregada correctamente",
             nota: noticiaCreada
         })
     })
 
     router.put("/:id", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const nota = req.body
         const notaId = parseInt(req.params.id)
 
@@ -65,10 +62,10 @@ const NewsController = () => {
 
         try {
             const noticiaModificada = await prisma.noticia.update({
-                where : {
-                    id : notaId
+                where: {
+                    id: notaId
                 },
-                data : nota
+                data: nota
             })
             resp.json({
                 msg: "Noticia editada correctamente",
@@ -82,7 +79,6 @@ const NewsController = () => {
     })
 
     router.delete("/:id", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const notaId = parseInt(req.params.id)
 
         if (notaId == undefined) {
@@ -93,8 +89,8 @@ const NewsController = () => {
         }
         try {
             await prisma.noticia.delete({
-                where : {
-                    id : notaId
+                where: {
+                    id: notaId
                 }
             })
             resp.json({
@@ -102,12 +98,12 @@ const NewsController = () => {
             })
         } catch (e) {
             resp.status(400).json({
-                msg : "No existe noticia con ese ID"
+                msg: "No existe noticia con ese ID"
             })
             return
         }
     })
-    
+
     return router
 }
 

@@ -1,17 +1,15 @@
 import express, { Request, Response } from "express"
-import { PrismaClient } from "../generated/prisma"
+import prisma from "../database/prisma"
 
 const UsersController = () => {
     const router = express.Router()
 
     router.get("/a/usuarios", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const usuarios = await prisma.usuario.findMany()
         resp.json(usuarios)
     })
 
     router.post("/register", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const usuario = req.body
 
         if (
@@ -54,7 +52,6 @@ const UsersController = () => {
     })
 
     router.post("/login", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const { email, password } = req.body
 
         if (email == undefined || password == undefined) {
@@ -95,7 +92,6 @@ const UsersController = () => {
     })
 
     router.put("/a/usuarios/:id", async (req: Request, resp: Response) => {
-        const prisma = new PrismaClient()
         const usuario = req.body
         const usuarioId = parseInt(req.params.id)
 
@@ -122,7 +118,7 @@ const UsersController = () => {
         try {
             const usuarioModificado = await prisma.usuario.update({
                 where: { id: usuarioId },
-                data: {                    
+                data: {
                     email: usuario.email,
                     password: usuario.password,
                     name: usuario.name,

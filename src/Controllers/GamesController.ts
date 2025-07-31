@@ -1,7 +1,5 @@
 import express, { Request, Response } from "express";
-import { PrismaClient } from "../generated/prisma";
-
-const prisma = new PrismaClient();
+import prisma from "../database/prisma";
 
 const GamesController = () => {
   const router = express.Router();
@@ -38,8 +36,8 @@ const GamesController = () => {
       res.json(juegosFormateados);
     } catch (error) {
       console.error("Error al obtener los juegos:", error);
-      res.status(400).json({ 
-        msg: "Error al obtener los juegos" 
+      res.status(400).json({
+        msg: "Error al obtener los juegos"
       });
     }
   });
@@ -123,13 +121,13 @@ const GamesController = () => {
         }
       });
 
-      res.status(200).json({ 
-        msg: "Juego creado exitosamente" 
+      res.status(200).json({
+        msg: "Juego creado exitosamente"
       });
     } catch (error) {
       console.error("Error al crear juego:", error);
-      res.status(400).json({ 
-        msg: "Error al crear juego" 
+      res.status(400).json({
+        msg: "Error al crear juego"
       });
     }
   });
@@ -222,12 +220,13 @@ const GamesController = () => {
         })
       );
 
-      res.json({ msg: 
-        "Juego actualizado correctamente" 
+      res.json({
+        msg:
+          "Juego actualizado correctamente"
       });
     } catch (error) {
-      res.status(400).json({ 
-        msg: "Error al actualizar juego" 
+      res.status(400).json({
+        msg: "Error al actualizar juego"
       });
     }
   });
@@ -243,12 +242,13 @@ const GamesController = () => {
 
       await prisma.juego.delete({ where: { id: gameId } });
 
-      res.json({ msg: 
-        "Juego eliminado correctamente" 
+      res.json({
+        msg:
+          "Juego eliminado correctamente"
       });
     } catch (error) {
-      res.status(400).json({ 
-        msg: "Error al eliminar juego", error 
+      res.status(400).json({
+        msg: "Error al eliminar juego", error
       });
     }
   });

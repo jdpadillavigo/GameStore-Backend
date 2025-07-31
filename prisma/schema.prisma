@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,72 +14,74 @@ datasource db {
 }
 
 model Noticia {
-  id Int @id
-  title String
-  category String
-  author String
+  id        Int    @id
+  title     String
+  category  String
+  author    String
   redaction String
-  image String
-  days Int
+  image     String
+  days      Int
 }
 
 model Usuario {
-  id Int @id @default(autoincrement())
-  email String @unique
+  id       Int    @id @default(autoincrement())
+  email    String @unique
   password String
-  name String
-  country String
-  token Int
-  role String
+  name     String
+  country  String
+  token    Int
+  role     String
 }
 
 model Calificacion {
-  id Int @id @default(autoincrement())
-  author String
+  id      Int    @id @default(autoincrement())
+  author  String
   message String
-  stars Int
+  stars   Int
   juegoId String
-  juego Juego @relation(fields: [juegoId], references: [id])
+  juego   Juego  @relation(fields: [juegoId], references: [id])
 }
 
 model Juego {
-  id String @id
-  title String
-  description String
-  trailer String
-  images String[]
-  release_date String
-  base_price Float
-  discount Float
+  id             String            @id
+  title          String
+  description    String
+  trailer        String
+  images         String[]
+  release_date   String
+  base_price     Float
+  discount       Float
   calificaciones Calificacion[]
-  plataformas PlataformaJuego[]
-  categorias CategoriaJuego[]
+  plataformas    PlataformaJuego[]
+  categorias     CategoriaJuego[]
 }
 
 model PlataformaJuego {
-  juegoId String
+  juegoId      String
   plataformaId Int
-  juego Juego @relation(fields: [juegoId], references: [id])
-  plataforma Plataforma @relation(fields: [plataformaId], references: [id])
+  juego        Juego      @relation(fields: [juegoId], references: [id])
+  plataforma   Plataforma @relation(fields: [plataformaId], references: [id])
+
   @@id([juegoId, plataformaId])
 }
 
 model Plataforma {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id     Int               @id @default(autoincrement())
+  name   String            @unique
   juegos PlataformaJuego[]
 }
 
 model CategoriaJuego {
-  juegoId String
+  juegoId     String
   categoriaId Int
-  juego Juego @relation(fields: [juegoId], references: [id])
-  categoria Categoria @relation(fields: [categoriaId], references: [id])
+  juego       Juego     @relation(fields: [juegoId], references: [id])
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
   @@id([juegoId, categoriaId])
 }
 
 model Categoria {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id     Int              @id @default(autoincrement())
+  name   String           @unique
   juegos CategoriaJuego[]
 }
